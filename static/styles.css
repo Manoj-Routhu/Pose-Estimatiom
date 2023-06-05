@@ -1,0 +1,21 @@
+h1 {
+    text-align: center;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#videoElement {
+    width: 640px;
+    height: 480px;
+    border: 1px solid black;
+}
+
+#canvasElement {
+    position: absolute;
+    z-index: 1;
+    border: 1px solid red;
+}
