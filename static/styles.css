@@ -1,21 +1,44 @@
+/* Center align the main heading */
+
 h1 {
     text-align: center;
-}
-
-.video-container {
-    display: flex;
-    justify-content: center;
     margin-top: 20px;
 }
 
-#videoElement {
-    width: 640px;
-    height: 480px;
-    border: 1px solid black;
+
+/* Style the file upload form container */
+
+.upload-container {
+    text-align: center;
+    margin-top: 20px;
 }
 
-#canvasElement {
-    position: absolute;
-    z-index: 1;
-    border: 1px solid red;
+
+/* Style the file input and submit button */
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-form input[type="file"] {
+    margin-bottom: 10px;
+}
+
+
+/* Style the result image container */
+
+.result-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+/* Style the result image */
+
+.result-image {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid black;
 }

@@ -7,7 +7,17 @@
 
 <body>
     <h1>Pose Estimation Web App</h1>
-    <img src="{{ url_for('video_feed') }}">
+
+    <!-- Upload Form -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="photo" accept=".jpg, .jpeg, .png">
+        <input type="submit" value="Estimate Pose">
+    </form>
+
+    <!-- Display the result image here -->
+    {% if result %}
+    <h2>Result:</h2>
+    <img src="data:image/jpeg;base64,{{ result }}" alt="Pose Estimation Result"> {% endif %}
 </body>
 
 </html>
