@@ -1,0 +1,62 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS CodePipeline Example
+
+Resources:
+  MyCodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: MyCodePipeline
+      RoleArn: arn:aws:iam::123456789012:role/CodePipelineServiceRole
+      ArtifactStore:
+        Type: S3
+        Location: my-codepipeline-artifacts-bucket
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: SourceAction
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Version: 1
+                Provider: GitHub  # Replace with your source provider (e.g., GitHub, S3, CodeCommit)
+              OutputArtifacts:
+                - Name: SourceOutput
+              Configuration:
+                RepositoryName: Pose-Estimatiom
+                BranchName: main
+              RunOrder: 1
+
+        - Name: Build
+          Actions:
+            - Name: BuildAction
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              InputArtifacts:
+                - Name: SourceOutput
+              OutputArtifacts:
+                - Name: BuildOutput
+              Configuration:
+                ProjectName: pose-estimation
+              RunOrder: 1
+
+        - Name: Deploy
+          Actions:
+            - Name: DeployAction
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              InputArtifacts:
+                - Name: BuildOutput
+              Configuration:
+                StackName: my-cloudformation-stack
+                ActionMode: CREATE_UPDATE
+                RoleArn: arn:aws:iam::123456789012:role/CloudFormationRole
+                TemplatePath: BuildOutput::template.yml
+                Capabilities: CAPABILITY_IAM
+              RunOrder: 1
